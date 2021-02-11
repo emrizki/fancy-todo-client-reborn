@@ -12,12 +12,11 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light mb-5">
-      <span class="navbar-brand mb-0 h1">Fancy Todo</span>
-      <button class="btn btn-outline-danger ml-auto" id="btn-logout">Logout</button>
+    <nav class="navbar navbar-light bg-light mb-1">
+      <span class="navbar-brand mb-0 h1" style="margin-left: 20px;">Fancy Todo</span>
+      <button class="btn btn-outline-danger ml-auto" id="btn-logout" style="margin-right: 20px">Logout</button>
     </nav>
-
-    <div class="container p-5">
+    <div class="container p-1">
      <!-- Login Form -->
       <div id="login-page">
         <form style="width: 300px; margin: 50px auto;" id="login-form">
@@ -35,33 +34,63 @@
         </form>
       </div>
 
-      <!-- list todo, add todo -->
+      <!-- list todo, add todo, edit todo -->
       <div id="main-page">
         <!-- Add Todo -->
-        <form style="width: 600px; margin: 50px auto;">
-        <h3>Add Todo</h3>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title-input" aria-describedby="emailHelp">
+        <div class="row text-center">
+          <div class="col-6" style="margin: 20px auto;" id="current-weather">
+
+          </div>
+          <div class="col-6" style="margin: 0 auto;">
+            <form style="width: 600px; margin: 20px auto;" id="todo-form">
+              <h3>Add Todo</h3>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title-input" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description-input">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Status</label>
+                <input type="text" class="form-control" id="status-input">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="due_date-input">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Description</label>
-          <input type="text" class="form-control" id="description-input">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Status</label>
-          <input type="text" class="form-control" id="status-input">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Due Date</label>
-          <input type="date" class="form-control" id="due_date-input">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+
+        <!-- Edit Todo -->
+        <form style="width: 600px; margin: 50px auto;" id="edit-form">
+          <h3>Edit Todo</h3>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title-edit" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description-edit">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Status</label>
+            <input type="text" class="form-control" id="status-edit">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Due Date</label>
+            <input type="date" class="form-control" id="due_date-edit">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
 
         <!-- List Todo -->
+        <button class="btn btn-large btn-primary" style="margin-bottom: 20px; margin-top: 50px" id="add-btn">Add Todo</button>
         <div class="row" id="todo-list">
-
         </div>
       </div>
     </div>
