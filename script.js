@@ -3,17 +3,47 @@ const token = localStorage.getItem('access_token')
 
 const showLoginPage = () => {
   $("#login-page").show()
+  $("#register-page").hide()
   $("#main-page").hide()
-  $("#btn-logout").hide()
+  $("#btn-logout").show()
 }
 const showMainPage = () => {
+
   $("#login-page").hide()
   $("#main-page").show()
   $("#btn-logout").show()
   $("#edit-form").hide()
   $("#todo-form").hide()
+  $("#register-page").hide()
   fetchTodos()
   getWeather()
+}
+const register = () => {
+  const first_name = $("#first_name-input").val()
+  const last_name = $("#last_name-input").val()
+  const email = $("#email_reg-input").val()
+  const password = $("#password_reg-input").val()
+
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/users/register`,
+    data: {
+      first_name,
+      last_name,
+      email,
+      password
+    },
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+  .done(response => {
+    console.log(response)
+    showLoginPage()
+  })
+  .fail((xhr, textStatus) => {
+    console.log(xhr, textStatus)
+  })
 }
 const login = () => {
     const email = $("#email-input").val()
@@ -29,6 +59,7 @@ const login = () => {
     })
     .done(response => {
       localStorage.setItem('access_token', response.access_token)
+      localStorage.setItem('full_name_user', response.full_name)
       showMainPage()
     })
     .fail((xhr, textStatus) => {
@@ -42,6 +73,10 @@ const login = () => {
 const logout = () => {
   localStorage.clear()
   showLoginPage()
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
 }
 const fetchTodos = () => {
   $.ajax({
@@ -53,7 +88,7 @@ const fetchTodos = () => {
   })
   .done(response => {
     $("#todo-list").empty()
-    $("#current-weather").data('user', response[0].User.full_name)
+    $("#current-weather").data("full_name_user", localStorage.getItem("full_name_user"))
     response.forEach(todo => {
       $("#todo-list").append(`<div class="card col-sm" style="width: 350px; margin-right: 15px;">
         <div class="card-header">
@@ -190,7 +225,8 @@ const getWeather = () => {
     }
   })
   .done(response => {
-    const username = $("#current-weather").data('user')
+    $("#current-weather").empty()
+    const username = $("#current-weather").data('full_name_user')
     $("#current-weather").append(`
     <h2>Hallo ${username}</h2>
     <h3>Berikut perkiraan cuaca hari ini:</h3>
@@ -208,6 +244,27 @@ const getWeather = () => {
     console.log(xhr)
   })
 }
+function onSignIn(googleUser) {
+  var googleToken = googleUser.getAuthResponse().id_token;
+
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/users/googlelogin`,
+    data: {
+      googleToken
+    }
+  })
+  .done(response => {
+    console.log(response)
+    localStorage.setItem('access_token', response.access_token)
+    localStorage.setItem('full_name_user', response.full_name)
+    showMainPage()
+  })
+  .fail((xhr, textStatus) => {
+    console.log(xhr, textStatus)
+  })
+}
+
 
 $(document).ready(() => {
 
@@ -234,5 +291,14 @@ $(document).ready(() => {
   })
   $("#add-btn").on("click", (event) => {
     $("#todo-form").show()
+  })
+  $("#register-here").on("click", (event) => {
+    event.preventDefault()
+    $("#register-page").show()
+    $("#login-page").hide()
+  })
+  $("#register-form").on("submit", (event) => {
+    event.preventDefault()
+    register()
   })
 })
