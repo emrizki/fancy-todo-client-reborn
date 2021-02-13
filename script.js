@@ -5,7 +5,7 @@ const showLoginPage = () => {
   $("#login-page").show()
   $("#register-page").hide()
   $("#main-page").hide()
-  $("#btn-logout").show()
+  $("#btn-logout").hide()
 }
 const showMainPage = () => {
 
