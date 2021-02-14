@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://fancy-todo-reborn.herokuapp.com'
 const token = localStorage.getItem('access_token')
 
 const showLoginPage = () => {
@@ -300,5 +300,9 @@ $(document).ready(() => {
   $("#register-form").on("submit", (event) => {
     event.preventDefault()
     register()
+  })
+  $("#have-account").on("click", (event) => {
+    event.preventDefault()
+    showLoginPage()
   })
 })
